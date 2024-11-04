@@ -12,6 +12,8 @@ export const environment = {
     username: process.env.DB_USERNAME || 'nodeexpressauthuser',
     password: process.env.DB_PASSWORD || 'nodeexpressauthpassword',
     database: process.env.DB_NAME || 'nodeexpressauth',
+    externalPort: process.env.DB_PORT_EXTERNAL || '5444',
+    externalHost: process.env.DB_EXTERNAL_HOST || 'localhost',
   },
   jwtSecret: process.env.JWT_SECRET || 'your-secret-key',
   twilio: {

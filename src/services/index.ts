@@ -1,1 +1,2 @@
-export * as health from './health.service';
+export * from './health.service';
+export * from './users.service';

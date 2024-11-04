@@ -1,12 +1,11 @@
 import { Request, Response } from 'express';
-import { health } from '../services/';
 import logger from '../utils/logger';
 import { http } from '../utils';
 import { tHealth } from '../types';
 import { HealthService } from '../services/health.service';
 
 export class HealthController {
-  private healthSrv: health.HealthService;
+  private healthSrv: HealthService;
   constructor(healthSrv: HealthService) {
     this.healthSrv = healthSrv;
   }
