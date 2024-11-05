@@ -1,7 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from 'typeorm';
 import { User } from './user';
 import { Request } from './requests';
-import { RequestAuthCode } from './request-auth-code';
 
 @Entity('user_requests')
 export class UserRequest {
@@ -16,7 +15,18 @@ export class UserRequest {
   @JoinColumn({ name: 'request_id' })
   request: Request;
 
-  @OneToOne(() => RequestAuthCode, authCode => authCode.userRequest, { cascade: true })
-  @JoinColumn({ name: 'auth_code_id' })
-  authCode: RequestAuthCode;
+  @Column('varchar')
+  code: string;
+
+  @Column({ default: false, type: 'bool' })
+  completed: boolean;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+  updatedAt: Date;
+
+  @Column({ type: 'timestamp', nullable: true })
+  expiresAt: Date;
 }

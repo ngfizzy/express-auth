@@ -1,9 +1,9 @@
 import express from 'express';
 
 import { HealthService } from '../../services';
-import { health } from '../../controllers';
+import { HealthController } from '../../controllers';
 
-const healthController = new health.HealthController(new HealthService());
+const healthController = new HealthController(new HealthService());
 
 export const router = express.Router();
 

@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import logger from '../utils/logger';
-import { http } from '../utils';
-import { tHealth } from '../types';
+import { tHealth, tNetwork } from '../types';
 import { HealthService } from '../services/health.service';
 
 export class HealthController {
@@ -16,7 +15,7 @@ export class HealthController {
       const isDatabaseConnected = await this.healthSrv.checkDatabaseConnection();
 
       if (isDatabaseConnected) {
-        res.status(http.Status.Ok).json({
+        res.status(tNetwork.Status.Ok).json({
           status: 'healthy',
           database: 'connected',
           message: 'server is healthy',
@@ -26,7 +25,7 @@ export class HealthController {
         return;
       }
 
-      res.status(http.Status.ServiceUnavailable).json({
+      res.status(tNetwork.Status.ServiceUnavailable).json({
         status: 'unhealthy',
         database: 'disconnected',
         message: 'server is unhealthy',
@@ -37,7 +36,7 @@ export class HealthController {
       logger.error('Error in health check', error);
 
       res
-        .status(http.Status.InternalServerError)
+        .status(tNetwork.Status.InternalServerError)
         .json({ status: 'error', message: 'Internal server error', timestamp });
       return;
     }

@@ -6,12 +6,15 @@ export class Request {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'text', unique: true })
-  description: string;
+  @Column({ type: 'varchar', unique: true })
+  name: string;
+
+  @OneToMany(() => UserRequest, userRequest => userRequest.request)
+  userRequests: UserRequest[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @OneToMany(() => UserRequest, userRequest => userRequest.request)
-  userRequests: UserRequest[];
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+  updatedAt: Date;
 }
