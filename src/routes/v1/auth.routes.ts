@@ -17,7 +17,6 @@ const userVerificationSrv = new UserRequestsVerificationService(
 );
 const authSrv = new AuthService(new UserRepo(), userVerificationSrv);
 const authController = new AuthController(authSrv);
-
 router.post('/signup', (req, res) => authController.signup(req, res));
 router.post('/signup/verify', (req, res) => authController.verifyAccount(req, res));
 router.post('/login', (req, res) => authController.requestLogin(req, res));

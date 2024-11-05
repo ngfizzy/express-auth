@@ -33,7 +33,10 @@ RUN npm install
 
 COPY . .
 
+
+RUN chmod u+x ./scripts/generate-migration.sh
+
+
 EXPOSE 3000
 
-# Use nodemon in dev mode to autoreload
 CMD ["npm", "run", "dev"]

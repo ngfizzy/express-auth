@@ -9,7 +9,7 @@ import { v1Router } from './routes';
 const app = express();
 
 app.use(express.json());
-app.use('/v1', v1Router);
+app.use('/api/v1', v1Router);
 
 const startServer = async () => {
   try {

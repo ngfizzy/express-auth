@@ -1,7 +1,4 @@
-import { DataSource } from 'typeorm';
-import { environment } from './environment';
 import logger from '../utils/logger';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AppDataSource } from './datasource';
 
 export const initializeDatabase = async () => {

@@ -6,8 +6,8 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 export const MigrationDatasource = new DataSource({
   type: 'postgres',
-  host: environment.db.externalHost,
-  port: Number.parseInt(environment.db.externalPort, 10),
+  host: environment.db.host,
+  port: environment.db.port,
   username: environment.db.username,
   password: environment.db.password,
   database: environment.db.database,

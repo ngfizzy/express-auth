@@ -1,12 +1,13 @@
 
 dev:
 	TARGET=dev docker compose up --build
-prod:
+prod: 
 	TARGET=prod docker compose up --build
-
+teardown:
+	docker compose down && docker system prune -a --volumes && rm -rfv ./data
 gen_migration:
-	npm run migration:gen ./src/migrations/${name}
-run_migration:
-	npm run migration:run
+	docker compose build && docker compose run generate_migration -- ./src/migrations/${name}
+migrate:
+	docker compose run migrate
 fmt:
 	npm run lint && npm run prettier

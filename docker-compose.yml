@@ -1,17 +1,22 @@
-version: '3.8'
-
 services:
   db:
-    image: postgres:latest
+    image: postgres:16
     restart: always
+    env_file:
+      - .env
     environment:
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
     ports:
-      - "${DB_PORT_EXTERNAL:-5444}:${DB_PORT:-5432}"
+      - '${DB_PORT_EXTERNAL:-5444}:${DB_PORT:-5432}'
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   app:
     build:
@@ -19,10 +24,58 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "${PORT:-3000}:${PORT:-3000}"
+      - '${PORT:-3000}:${PORT:-3000}'
     env_file:
       - .env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:${PORT:-3000}/api/v1/health']
+      interval: '10s' # How often to check (adjust as needed)
+      timeout: 5s # Timeout for each attempt
+      retries: 3 # Number of retries before marking as unhealthy
+      start_period: 10s # Time to wait before the first check
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /usr/src/app/src
+        - action: rebuild
+          path: package.json
+
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npm run migration:run
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  generate_migration:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint: ['sh', './scripts/generate-migration.sh']
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+
+x-develop:
+  app:
+    watch:
+      - path: ./src
+        action: sync
+        target: /usr/src/app/src
+      - path: package.json
+        action: rebuild
+
+
 volumes:
   postgres_data:
+    driver: local
