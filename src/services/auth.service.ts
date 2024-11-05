@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { UserRepo } from '../repositories';
 import { tAuth, tSrvs, tVerif } from 'types';
@@ -122,7 +122,7 @@ export class AuthService {
       return srvcs.results.createInvalidDataErrorResult('Failed to update password');
     }
 
-    const resetReqRes = await this.verificationService.createPasswordResetRequest(user.id);
+    const resetReqRes = await this.verificationService.createPasswordResetRequest(user);
     if (resetReqRes.error) {
       return srvcs.results.createUnexpectedErrorResult(
         'Failed to send reset code, try again later',

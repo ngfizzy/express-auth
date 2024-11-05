@@ -63,4 +63,3 @@ make gen_migration name=<migration-name>
 ## Health Check
 
 * GET /v1/health: Check if the server is up and running.
-
