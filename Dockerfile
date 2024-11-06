@@ -36,9 +36,8 @@ RUN NODE_ENV=development npm install && npm --global install nodemon tsx
 
 COPY . .
 
-
 RUN chmod u+x ./scripts/generate-migration.sh
-
+RUN chmod u+x ./scripts/npmrun.sh
 
 EXPOSE 3000
 

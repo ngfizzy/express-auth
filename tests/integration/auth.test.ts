@@ -1,6 +1,6 @@
 
 import request from 'supertest';
-import {app} from '../../src'; // Adjust the import based on your app's entry point
+import {app} from '../../src'; 
 
 describe('Auth Integration Tests', () => {
   let mobile: string;

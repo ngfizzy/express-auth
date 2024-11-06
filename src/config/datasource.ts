@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
   username: environment.db.username,
   password: environment.db.password,
   database: environment.db.database,
-  logging: environment.nodeEnv === 'development',
+  logging: environment.nodeEnv === 'development' || environment.nodeEnv === 'test',
   entities: ['src/models/**/*.ts'],
   migrations: ['src/migrations/**/*.ts'],
   subscribers: ['src/subscribers/**/*.ts'],

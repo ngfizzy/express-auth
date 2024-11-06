@@ -1,4 +1,6 @@
 
+test:
+	npm i && docker compose build && docker compose run test test
 dev:
 	NODE_ENV=develop npm i && docker compose up develop --build
 prod: 
