@@ -5,6 +5,7 @@ import { tAuth, tNetwork } from 'types';
 import {
   initiateLoginSchema,
   loginVerifySchema,
+  passwordResetInitiationSchema,
   signupSchema,
   verifyAccountSchema,
 } from 'utils/validation';
@@ -94,6 +95,25 @@ export const validateLoginVerify = (
     res.status(tNetwork.Status.Unauthenticated).json({
       error: true,
       message: 'Login failed',
+      data: { details: error.details.map((detail: { message: string }) => detail.message) },
+    });
+    return;
+  }
+
+  next();
+};
+
+export const validatePasswordResetInitiation = (
+  req: tNetwork.AuthReq<tAuth.ResetPasswordReq>,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { error } = passwordResetInitiationSchema.validate(req.body);
+
+  if (error) {
+    res.status(tNetwork.Status.BadRequest).json({
+      error: true,
+      message: 'Invalid request data',
       data: { details: error.details.map((detail: { message: string }) => detail.message) },
     });
     return;

@@ -30,3 +30,7 @@ export const loginVerifySchema = Joi.object<tAuth.LoginVerifReq>({
   mobile: Joi.string().required(),
   code: Joi.string().required(),
 });
+
+export const passwordResetInitiationSchema = Joi.object<tAuth.ResetPasswordReq>({
+  mobile: Joi.string().required(),
+});

@@ -26,7 +26,7 @@ export class AuthController {
     return netw.sendResponse(res, await this.authSrv.login(req.body));
   }
 
-  async requestPasswordReset(req: tNetwork.Req<tAuth.ResetPasswordReq>, res: Response) {
+  async initiatePasswordReset(req: tNetwork.Req<tAuth.ResetPasswordReq>, res: Response) {
     return netw.sendResponse(res, await this.authSrv.requestPasswordReset(req.body.mobile));
   }
 
