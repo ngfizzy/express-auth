@@ -1,14 +1,15 @@
 import Joi from 'joi';
 import { tAuth } from 'types';
 
-export const validateSignup = (data: tAuth.SignupReq) => {
-  const schema = Joi.object({
-    mobile: Joi.string()
-      .pattern(/^[0-9]{10}$/)
-      .required()
-      .message('phone number not valid'),
-    password: Joi.string().min(8).required().message('password must be at least 8 characters'),
-  });
-
-  return schema.validate(data);
-};
+export const signupSchema = Joi.object<tAuth.SignupReq>({
+  mobile: Joi.string()
+    .pattern(/^\+?[0-9]{10,15}$/)
+    .required()
+    .messages({
+      'string.pattern.base':
+        'Mobile number must contain only numbers, optionally start with +, and be 10-15 digits long.',
+    }),
+  name: Joi.string().min(2).max(100),
+  email: Joi.string().email().required(),
+  password: Joi.string().min(8).max(255).required(),
+});

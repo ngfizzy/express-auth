@@ -2,6 +2,7 @@ import { environment } from 'config';
 import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { tNetwork } from 'types';
+import { signupSchema } from 'utils/validation';
 
 export const authenticateToken = (req: tNetwork.AuthReq, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
@@ -21,4 +22,19 @@ export const authenticateToken = (req: tNetwork.AuthReq, res: Response, next: Ne
     res.status(tNetwork.Status.Unauthorized).json({ message: 'Unauthorized' });
     return;
   }
+};
+
+export const validateSignup = (req: tNetwork.AuthReq, res: Response, next: NextFunction) => {
+  const { error } = signupSchema.validate(req.body);
+
+  if (error) {
+    res.status(tNetwork.Status.BadRequest).json({
+      error: true,
+      message: 'Invalid request data',
+      data: { details: error.details.map((detail: { message: string }) => detail.message) },
+    });
+    return;
+  }
+
+  next();
 };

@@ -21,7 +21,17 @@ export class DevSmsService implements tSender.Sender {
     to: string,
     from = environment.twilio.phoneNumber,
   ): Promise<tSrvs.Result> {
-    logger.info('Sent successfully', { message, to, from });
+    const smsMsg = `
+==============================
+    VERIFICATION MESSAGE
+==============================
+${message}
+------------------------------
+FROM: ${from}
+TO: ${to}
+SENT ON: ${new Date().toLocaleDateString()}`;
+
+    logger.info(smsMsg);
     return srvcs.results.createOkResult('message sent successfully');
   }
 }

@@ -1,6 +1,6 @@
 
 dev:
-	docker compose up develop --build
+	NODE_ENV=develop npm i && docker compose up develop --build
 prod: 
 	docker compose up app --build
 teardown:
@@ -25,6 +25,7 @@ reset_db:
 			exit 1; \
 		fi; \
 	done
+	@rm -rfv ./data
 	@echo "Database reset complete!"
 
 

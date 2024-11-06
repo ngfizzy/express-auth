@@ -1,6 +1,8 @@
 export interface SignupReq {
   mobile: string;
+  email: string;
   password: string;
+  name: string;
 }
 
 export interface VerificationReq {

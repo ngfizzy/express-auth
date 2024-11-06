@@ -50,14 +50,13 @@ services:
     env_file:
       - .env
     depends_on:
-      db:
-        condition: service_healthy
+      - migrate
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost:${PORT:-3000}/api/v1/health']
-      interval: '10s' # How often to check (adjust as needed)
-      timeout: 5s # Timeout for each attempt
-      retries: 3 # Number of retries before marking as unhealthy
-      start_period: 10s # Time to wait before the first check
+      interval: '10s'
+      timeout: 5s
+      retries: 3 
+      start_period: 10s 
     develop:
       watch:
         - action: sync
@@ -65,10 +64,6 @@ services:
           target: /usr/src/app/src
         - action: rebuild
           path: package.json
-    # volumes:
-      # - ./:/usr/src/app
-      # - ./node_modules:/usr/src/app/node_modules
-
 
   migrate:
     build:
@@ -107,6 +102,7 @@ services:
         condition: service_healthy
     volumes:
       - ./src/migrations:/usr/src/app/src/migrations
+
 x-develop:
   deveop:
     watch:
@@ -115,8 +111,6 @@ x-develop:
         target: /usr/src/app/src
       - path: package.json
         action: rebuild
-
-
 volumes:
   postgres_data:
     driver: local

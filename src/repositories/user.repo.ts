@@ -20,8 +20,8 @@ export class UserRepo {
     return this.userRepo.findOne({ where: { mobile } });
   }
 
-  createUser(mobile: string, password: string) {
-    const user = this.userRepo.create({ mobile, password });
+  createUser(newUser: { mobile: string; email: string; password: string; name: string }) {
+    const user = this.userRepo.create(newUser);
     return this.userRepo.save(user);
   }
 

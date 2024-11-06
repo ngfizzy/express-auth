@@ -28,15 +28,15 @@ export class AuthService {
       pswdHashRes.message = 'signup failed';
     }
 
-    const user = await this.userRepo.createUser(credentials.mobile, pswdHashRes.data!);
+    const user = await this.userRepo.createUser({ ...credentials, password: pswdHashRes.data! });
     if (!user) {
       return srvcs.results.createUnexpectedErrorResult('signup failed');
     }
 
-    let message = 'signup successful';
+    let message = 'signup successful ';
 
     const getMessage = (verificationSent: boolean) => {
-      return `${message};${verificationSent ? 'failed to send verification code but you can still sign in and request for verification later' : 'we have sent you a verification code'}`;
+      return `${message};${verificationSent ? 'we have sent you a verification code' : 'failed to send verification code but you can still sign in and request for verification later'}`;
     };
     try {
       const verifRes = await this.verificationService.createUserAccountVerificationRequest(user.id);

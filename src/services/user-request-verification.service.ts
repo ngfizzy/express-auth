@@ -41,11 +41,14 @@ export class UserRequestsVerificationService {
     }
 
     const requestRecord = await this.createVerificationRecord(userId, requestType);
-    if (requestRecord.error) return requestRecord;
-
+    if (requestRecord.error) {
+      return requestRecord;
+    }
     const { code, expiresAt, user } = requestRecord.data!;
     const smsResult = await this.sendVerificationCode(code, user.mobile!, expiresAt);
-    if (smsResult.error) return smsResult;
+    if (smsResult.error) {
+      return smsResult;
+    }
 
     return srvcs.results.createCreatedResult(successMessage, requestRecord.data);
   }
