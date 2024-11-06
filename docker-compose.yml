@@ -19,9 +19,31 @@ services:
       retries: 5
 
   app:
+    develop:
     build:
       context: .
       dockerfile: Dockerfile
+      target: prod
+    restart: always
+    ports:
+      - '${PORT:-3000}:${PORT:-3000}'
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:${PORT:-3000}/api/v1/health']
+      interval: '10s' # How often to check (adjust as needed)
+      timeout: 5s # Timeout for each attempt
+      retries: 3 # Number of retries before marking as unhealthy
+      start_period: 10s # Time to wait before the first checks
+
+  develop:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
     restart: always
     ports:
       - '${PORT:-3000}:${PORT:-3000}'
@@ -43,12 +65,29 @@ services:
           target: /usr/src/app/src
         - action: rebuild
           path: package.json
+    # volumes:
+      # - ./:/usr/src/app
+      # - ./node_modules:/usr/src/app/node_modules
+
 
   migrate:
     build:
       context: .
       dockerfile: Dockerfile
+      target: dev
     command: npm run migration:run
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  migrate_revert:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    entrypoint: npm run migration:revert || true
     env_file:
       - .env
     depends_on:
@@ -59,15 +98,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: dev
     entrypoint: ['sh', './scripts/generate-migration.sh']
     env_file:
       - .env
     depends_on:
       db:
         condition: service_healthy
-
+    volumes:
+      - ./src/migrations:/usr/src/app/src/migrations
 x-develop:
-  app:
+  deveop:
     watch:
       - path: ./src
         action: sync

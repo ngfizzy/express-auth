@@ -27,9 +27,12 @@ CMD ["node", "dist/index.js"]
 FROM node:22.11.0 AS dev
 WORKDIR /usr/src/app
 
-COPY package*.json ./
-RUN npm install
 
+
+
+COPY package*.json ./
+
+RUN NODE_ENV=development npm install && npm --global install nodemon tsx
 
 COPY . .
 
