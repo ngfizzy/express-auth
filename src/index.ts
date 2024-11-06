@@ -2,11 +2,12 @@ import 'reflect-metadata';
 
 import express from 'express';
 
-import logger from './utils/logger';
+import { logging } from './utils';
 import { environment, initializeDatabase } from './config';
 import { v1Router } from './routes';
 
-const app = express();
+const logger = logging.logger;
+export const app = express();
 
 app.use(express.json());
 app.use('/api/v1', v1Router);

@@ -1,10 +1,10 @@
 import { AppRequestRepo, UserRepo, UserRequestRepo } from '../repositories';
-import { minsIntoFuture } from 'utils/date-time';
-import { environment } from 'config';
-import { Request, User, UserRequest } from 'models';
-import { tSrvs, tVerif } from 'types';
+import { minsIntoFuture } from '../utils/date-time';
+import { environment } from '../config';
+import { Request, User, UserRequest } from '../models';
+import { tSrvs, tVerif } from '../types';
 import { SMSService } from './sms.service';
-import { rand, srvcs } from 'utils';
+import { rand, srvcs } from '../utils';
 
 export class UserRequestsVerificationService {
   private appReqRep: AppRequestRepo;

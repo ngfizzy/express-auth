@@ -1,6 +1,7 @@
-import { tSrvs } from 'types';
-import logger from 'utils/logger';
+import { tSrvs } from '../../types';
+import { logging } from '../../utils';
 
+const logger = logging.logger;
 export function createConflictResult<Data = unknown>(
   message: string,
   data?: Data,

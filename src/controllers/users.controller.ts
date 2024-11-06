@@ -1,7 +1,7 @@
 import { Response } from 'express';
-import { tNetwork, tUsers } from 'types';
-import { UsersService } from 'services';
-import { netw } from 'utils';
+import { tNetwork, tUsers } from '../types';
+import { UsersService } from '../services';
+import { netw } from '../utils';
 
 export class UsersController {
   private usersService: UsersService;

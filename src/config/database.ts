@@ -1,6 +1,8 @@
-import logger from '../utils/logger';
+import { logging } from '../utils';
+
 import { AppDataSource } from './datasource';
 
+const logger = logging.logger;
 export const initializeDatabase = async () => {
   try {
     await AppDataSource.initialize();

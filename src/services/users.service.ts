@@ -1,7 +1,7 @@
-import { User } from 'models';
+import { User } from '../models';
 import { UserRepo } from '../repositories';
-import { tSrvs } from 'types';
-import { srvcs } from 'utils';
+import { tSrvs } from '../types';
+import { srvcs } from '../utils';
 
 export class UsersService {
   private userRepo: UserRepo;

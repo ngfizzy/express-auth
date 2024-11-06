@@ -1,15 +1,15 @@
 import express from 'express';
 import { AuthController } from '../../controllers';
-import { AuthService, UserRequestsVerificationService } from 'services';
-import { AppRequestRepo, UserRepo, UserRequestRepo } from 'repositories';
-import { DevSmsService, SMSService, TwilioSender } from 'services/sms.service';
-import { environment } from 'config';
-import * as middleware from 'middleware';
-import { tAuth, tNetwork } from 'types';
+import { AuthService, UserRequestsVerificationService } from '../../services';
+import { AppRequestRepo, UserRepo, UserRequestRepo } from '../../repositories';
+import { DevSmsService, SMSService, TwilioSender } from '../../services/sms.service';
+import { environment } from '../../config';
+import * as middleware from '../../middleware';
+import { tAuth, tNetwork } from '../../types';
 
 export const router = express.Router();
 
-const smsSender = environment.nodeEnv === 'development' ? new DevSmsService() : new TwilioSender();
+const smsSender = environment.nodeEnv === 'development' || 'test' ? new DevSmsService() : new TwilioSender();
 const smsSrv = new SMSService(smsSender);
 const userVerificationSrv = new UserRequestsVerificationService(
   new AppRequestRepo(),

@@ -1,12 +1,12 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { UserRepo } from '../repositories';
-import { tAuth, tSrvs, tVerif } from 'types';
+import { tAuth, tSrvs } from '../types';
 import { UserRequestsVerificationService } from './user-request-verification.service';
-import logger from 'utils/logger';
-import { srvcs } from 'utils';
-import { environment } from 'config';
+import { srvcs, logging } from '../utils';
+import { environment } from '../config';
 
+const logger = logging.logger;
 export class AuthService {
   private userRepo: UserRepo;
   private verificationService: UserRequestsVerificationService;

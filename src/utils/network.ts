@@ -1,17 +1,15 @@
 import { Response } from 'express';
-import { tSrvs } from 'types';
-import { Status, StatusNum } from 'types/network.interface';
-import { ServiceCodes, ServiceCodesVals } from 'types/services.interface';
+import { tSrvs, tNetwork } from '../types';
 
-export const ServiceToNetworkStatusMap: Record<ServiceCodesVals, StatusNum> = {
-  [ServiceCodes.Ok]: Status.Ok,
-  [ServiceCodes.Created]: Status.Created,
-  [ServiceCodes.InsufficientData]: Status.UnprocessableEntity,
-  [ServiceCodes.InvalidData]: Status.UnprocessableEntity,
-  [ServiceCodes.Conflict]: Status.Conflict,
-  [ServiceCodes.UnexpectedError]: Status.InternalServerError,
-  [ServiceCodes.Unauthenticated]: Status.Unauthenticated,
-  [ServiceCodes.NotFound]: Status.NotFound,
+export const ServiceToNetworkStatusMap: Record<tSrvs.ServiceCodesVals, tNetwork.StatusNum> = {
+  [tSrvs.ServiceCodes.Ok]: tNetwork.Status.Ok,
+  [tSrvs.ServiceCodes.Created]: tNetwork.Status.Created,
+  [tSrvs.ServiceCodes.InsufficientData]: tNetwork.Status.UnprocessableEntity,
+  [tSrvs.ServiceCodes.InvalidData]: tNetwork.Status.UnprocessableEntity,
+  [tSrvs.ServiceCodes.Conflict]: tNetwork.Status.Conflict,
+  [tSrvs.ServiceCodes.UnexpectedError]: tNetwork.Status.InternalServerError,
+  [tSrvs.ServiceCodes.Unauthenticated]: tNetwork.Status.Unauthenticated,
+  [tSrvs.ServiceCodes.NotFound]: tNetwork.Status.NotFound,
 };
 
 /**
@@ -24,7 +22,8 @@ export const ServiceToNetworkStatusMap: Record<ServiceCodesVals, StatusNum> = {
 export function sendResponse<Data>(res: Response, serviceResult: tSrvs.Result<Data>) {
   const { code, error, message, data } = serviceResult;
   const statusCode =
-    ServiceToNetworkStatusMap[code as ServiceCodesVals] || Status.InternalServerError;
+    ServiceToNetworkStatusMap[code as tSrvs.ServiceCodesVals] ||
+    tNetwork.Status.InternalServerError;
 
   res.status(statusCode).json({
     error,

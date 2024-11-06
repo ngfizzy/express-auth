@@ -1,9 +1,9 @@
-import { environment } from 'config';
 import twilio from 'twilio';
-import { tSender, tSrvs } from 'types';
-import { srvcs } from 'utils';
-import logger from 'utils/logger';
+import { environment } from '../config';
+import { tSender, tSrvs } from '../types';
+import { logging, srvcs } from '../utils';
 
+const logger = logging.logger;
 export class SMSService {
   private sender: tSender.Sender;
   constructor(sender: tSender.Sender) {

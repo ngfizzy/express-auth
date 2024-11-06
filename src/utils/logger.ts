@@ -1,6 +1,6 @@
 import { createLogger, format, transports } from 'winston';
 
-const logger = createLogger({
+export const logger = createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: format.combine(
     format.timestamp(),
@@ -26,5 +26,3 @@ logger.exceptions.handle(
   new transports.Console(),
   new transports.File({ filename: 'logs/exceptions.log' }),
 );
-
-export default logger;

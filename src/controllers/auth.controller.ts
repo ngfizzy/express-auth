@@ -1,8 +1,8 @@
 import { Response } from 'express';
 
-import { AuthService } from 'services';
-import { tAuth, tNetwork } from 'types';
-import { netw } from 'utils';
+import { AuthService } from '../services';
+import { tAuth, tNetwork } from '../types';
+import { netw } from '../utils';
 
 export class AuthController {
   private authSrv: AuthService;

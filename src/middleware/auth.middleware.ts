@@ -1,7 +1,7 @@
-import { environment } from 'config';
-import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { tAuth, tNetwork } from 'types';
+import { Response, NextFunction } from 'express';
+import { environment } from '../config';
+import { tAuth, tNetwork } from '../types';
 import {
   initiateLoginSchema,
   loginVerifySchema,
@@ -9,7 +9,7 @@ import {
   passwordResetVerifySchema,
   signupSchema,
   verifyAccountSchema,
-} from 'utils/validation';
+} from '../utils/validation';
 
 export const authenticateToken = (req: tNetwork.AuthReq, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;

@@ -1,6 +1,6 @@
-import { updateUserSchema } from 'utils/validation';
-import { tNetwork, tUsers } from 'types';
 import { Response, NextFunction } from 'express';
+import { updateUserSchema } from '../utils/validation';
+import { tNetwork, tUsers } from '../types';
 
 export const validateUpdateMe = (
   req: tNetwork.AuthReq<tUsers.UpdateMeReq>,

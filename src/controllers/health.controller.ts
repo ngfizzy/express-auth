@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import logger from '../utils/logger';
+import { logging } from '../utils';
 import { tHealth, tNetwork } from '../types';
 import { HealthService } from '../services/health.service';
 
+const logger = logging.logger;
 export class HealthController {
   private healthSrv: HealthService;
   constructor(healthSrv: HealthService) {

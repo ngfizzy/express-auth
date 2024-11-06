@@ -1,7 +1,6 @@
-import { Request, UserRequest } from 'models';
-import { AppDataSource } from '../config';
-import { User } from '../models/user';
 import { MoreThan } from 'typeorm';
+import { Request, UserRequest, User } from '../models';
+import { AppDataSource } from '../config';
 
 export class UserRequestRepo {
   private usrReqRepo = AppDataSource.getRepository(UserRequest);
