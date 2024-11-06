@@ -60,7 +60,7 @@ export function createUnauthenticatedResult<Data = unknown>(
   logger.info(message, tSrvs.ServiceCodes.Unauthenticated, data);
 
   return {
-    error: false,
+    error: true,
     message,
     code: tSrvs.ServiceCodes.Unauthenticated,
     data,

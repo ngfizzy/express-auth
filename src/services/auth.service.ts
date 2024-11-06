@@ -76,7 +76,7 @@ export class AuthService {
   async login(credential: tAuth.LoginVerifReq) {
     const user = await this.userRepo.getUserByMobile(credential.mobile);
     if (!user) {
-      return srvcs.results.createConflictResult('User not found');
+      return srvcs.results.createUnauthenticatedResult('Invalid credentials');
     }
 
     const verifRes = await this.verificationService.validateLoginVerificationCode(

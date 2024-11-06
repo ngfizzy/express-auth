@@ -25,3 +25,8 @@ export const initiateLoginSchema = Joi.object<tAuth.LoginReq>({
   mobile: Joi.string().required(),
   password: Joi.string().required(),
 });
+
+export const loginVerifySchema = Joi.object<tAuth.LoginVerifReq>({
+  mobile: Joi.string().required(),
+  code: Joi.string().required(),
+});
