@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { tAuth } from 'types';
+import { tAuth, tUsers } from 'types';
 
 export const signupSchema = Joi.object<tAuth.SignupReq>({
   mobile: Joi.string()
@@ -34,3 +34,17 @@ export const loginVerifySchema = Joi.object<tAuth.LoginVerifReq>({
 export const passwordResetInitiationSchema = Joi.object<tAuth.ResetPasswordReq>({
   mobile: Joi.string().required(),
 });
+
+export const passwordResetVerifySchema = Joi.object<tAuth.RestPasswordVerifReq>({
+  mobile: Joi.string().required(),
+  password: Joi.string().min(8).max(255).required(),
+  code: Joi.string().required(),
+});
+export const updateUserSchema = Joi.object<tUsers.UpdateMeReq>({
+  name: Joi.string().min(2).max(100).optional(),
+  email: Joi.string().email().optional(),
+})
+  .or('name', 'email')
+  .messages({
+    'object.missing': 'At least one of name or email must be provided for update.',
+  });

@@ -36,4 +36,6 @@ router.post('/login/verify', middleware.auth.validateLoginVerify, (req, res) =>
 router.post('/passwords/reset', middleware.auth.validatePasswordResetInitiation, (req, res) =>
   authController.initiatePasswordReset(req, res),
 );
-router.post('/passwords/reset/verify', (req, res) => authController.resetPassword(req, res));
+router.post('/passwords/reset/verify', middleware.auth.validatePasswordReset, (req, res) =>
+  authController.resetPassword(req, res),
+);

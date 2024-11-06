@@ -6,6 +6,7 @@ import {
   initiateLoginSchema,
   loginVerifySchema,
   passwordResetInitiationSchema,
+  passwordResetVerifySchema,
   signupSchema,
   verifyAccountSchema,
 } from 'utils/validation';
@@ -114,6 +115,25 @@ export const validatePasswordResetInitiation = (
     res.status(tNetwork.Status.BadRequest).json({
       error: true,
       message: 'Invalid request data',
+      data: { details: error.details.map((detail: { message: string }) => detail.message) },
+    });
+    return;
+  }
+
+  next();
+};
+
+export const validatePasswordReset = (
+  req: tNetwork.AuthReq<tAuth.RestPasswordVerifReq>,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { error } = passwordResetVerifySchema.validate(req.body);
+
+  if (error) {
+    res.status(tNetwork.Status.Unauthorized).json({
+      error: true,
+      message: 'Unauthorized',
       data: { details: error.details.map((detail: { message: string }) => detail.message) },
     });
     return;
