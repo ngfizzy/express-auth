@@ -13,3 +13,10 @@ export const signupSchema = Joi.object<tAuth.SignupReq>({
   email: Joi.string().email().required(),
   password: Joi.string().min(8).max(255).required(),
 });
+
+export const verifyAccountSchema = Joi.object<tAuth.AccountVerifReq>({
+  mobile: Joi.string()
+    .pattern(/^\+?[0-9]{10,15}$/)
+    .required(),
+  code: Joi.string().required(),
+});

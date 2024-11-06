@@ -101,13 +101,11 @@ export class AuthService {
       return srvcs.results.createConflictResult('User not found');
     }
 
-    const validationRes = await this.verificationService.validateVerificationCode(
+    const validationRes = await this.verificationService.validateAccountVerificationCode(
       user,
       credentials.code,
-      tVerif.AppRequests.AccountVerification,
-      `${tVerif.AppRequests.AccountVerification.toLowerCase()} validations successful`,
     );
-    if (!validationRes.error) {
+    if (validationRes.error) {
       return validationRes;
     }
 

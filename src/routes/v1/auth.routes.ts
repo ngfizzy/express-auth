@@ -24,7 +24,9 @@ router.post(
   middleware.auth.validateSignup,
   (req: tNetwork.AuthReq<tAuth.SignupReq>, res) => authController.signup(req, res),
 );
-router.post('/signup/verify', (req, res) => authController.verifyAccount(req, res));
+router.post('/signup/verify', middleware.auth.validateVerifyAccount, (req, res) =>
+  authController.verifyAccount(req, res),
+);
 router.post('/login', (req, res) => authController.requestLogin(req, res));
 router.post('/login/verify', (req, res) => authController.login(req, res));
 router.post('/password/reset/request', (req, res) => authController.requestPasswordReset(req, res));
