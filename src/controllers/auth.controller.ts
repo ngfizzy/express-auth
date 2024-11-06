@@ -18,7 +18,7 @@ export class AuthController {
     return netw.sendResponse(res, await this.authSrv.verifyAccount(req.body));
   }
 
-  async requestLogin(req: tNetwork.Req<tAuth.LoginReq>, res: Response): Promise<void> {
+  async initiateLogin(req: tNetwork.Req<tAuth.LoginReq>, res: Response): Promise<void> {
     return netw.sendResponse(res, await this.authSrv.requestLogin(req.body));
   }
 

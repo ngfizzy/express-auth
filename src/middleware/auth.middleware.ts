@@ -2,7 +2,7 @@ import { environment } from 'config';
 import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { tAuth, tNetwork } from 'types';
-import { signupSchema, verifyAccountSchema } from 'utils/validation';
+import { initiateLoginSchema, signupSchema, verifyAccountSchema } from 'utils/validation';
 
 export const authenticateToken = (req: tNetwork.AuthReq, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
@@ -52,6 +52,26 @@ export const validateVerifyAccount = (
       message: 'Invalid request data',
       data: { details: error.details.map((detail: { message: string }) => detail.message) },
     });
+    return;
+  }
+
+  next();
+};
+
+export const validateLoginInitiation = (
+  req: tNetwork.AuthReq<tAuth.LoginReq>,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { error } = initiateLoginSchema.validate(req.body);
+
+  if (error) {
+    res.status(tNetwork.Status.BadRequest).json({
+      error: true,
+      message: 'Invalid login login cred',
+      data: { details: error.details.map((detail: { message: string }) => detail.message) },
+    });
+
     return;
   }
 

@@ -20,3 +20,8 @@ export const verifyAccountSchema = Joi.object<tAuth.AccountVerifReq>({
     .required(),
   code: Joi.string().required(),
 });
+
+export const initiateLoginSchema = Joi.object<tAuth.LoginReq>({
+  mobile: Joi.string().required(),
+  password: Joi.string().required(),
+});

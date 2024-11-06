@@ -27,7 +27,9 @@ router.post(
 router.post('/signup/verify', middleware.auth.validateVerifyAccount, (req, res) =>
   authController.verifyAccount(req, res),
 );
-router.post('/login', (req, res) => authController.requestLogin(req, res));
+router.post('/login', middleware.auth.validateLoginInitiation, (req, res) =>
+  authController.initiateLogin(req, res),
+);
 router.post('/login/verify', (req, res) => authController.login(req, res));
 router.post('/password/reset/request', (req, res) => authController.requestPasswordReset(req, res));
 router.post('/password/reset', (req, res) => authController.resetPassword(req, res));

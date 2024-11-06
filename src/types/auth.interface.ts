@@ -12,7 +12,10 @@ export interface VerificationReq {
 
 export interface AccountVerifReq extends VerificationReq {}
 
-export interface LoginReq extends SignupReq {}
+export interface LoginReq {
+  mobile: string;
+  password: string;
+}
 
 export interface LoginVerifReq extends VerificationReq {}
 export interface ResetPasswordReq {
